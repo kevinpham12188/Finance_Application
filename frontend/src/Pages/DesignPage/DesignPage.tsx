@@ -20,7 +20,7 @@ const DesignPage = (props: Props) => {
         This is Kevin's design page. This is where we will house various design aspects of the app
     </h2>
     <RatioList data={testIncomeStatementData} config={tableConfig}/>
-    <Table />
+    <Table data={testIncomeStatementData} config={tableConfig} />
     </>
   )
 }
