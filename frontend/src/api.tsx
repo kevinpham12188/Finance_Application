@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CompanyBalanceSheet, CompanyCashFlow, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company"
+import { CompanyBalanceSheet, CompanyCashFlow, CompanyCompData, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company"
 
 export interface SearchResponse {
     data: CompanySearch[];
@@ -83,6 +83,18 @@ export const getCashFlow = async (query : string) => {
     try {
         const data = await axios.get<CompanyCashFlow[]> (
             `https://financialmodelingprep.com/api/v3/cash-flow-statement/${query}?limit=100&apikey=${process.env.REACT_APP_API_KEY}`
+        );
+        return data;
+    } catch(error : any) {
+        console.log("error message from API: ", error.message);
+    }
+}
+
+// API call for Comparable data
+export const getCompData = async (query : string) => {
+    try {
+        const data = await axios.get<CompanyCompData[]> (
+            `https://financialmodelingprep.com/api/v4/stock_peers?symbol=${query}&apikey=${process.env.REACT_APP_API_KEY}`
         );
         return data;
     } catch(error : any) {
