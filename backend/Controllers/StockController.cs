@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Dtos.Stock;
 using backend.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,5 +31,12 @@ namespace backend.Controllers
             return Ok(stock.ToStockDto());
         }
        
+       [HttpPost]
+       public IActionResult Create([FromBody] CreateStockRequestDto stockDto) {
+            var stockModel = stockDto.ToStockFromCreateDto();
+            _context.Stocks.Add(stockModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { id = stockModel.Id }, stockModel.ToStockDto());
+       }
     }
 }
