@@ -43,14 +43,14 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        [Route("id")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id) {
             var commentModel = await _commentRepo.DeleteAsync(id);
             if(commentModel == null) 
             {
-                return NotFound();
+                return NotFound("Comment does not exist");
             }
-            return NoContent();
+            return Ok(commentModel);
         }
 
     }
