@@ -49,13 +49,13 @@ namespace backend.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto updateDto) {
             if(!ModelState.IsValid) return BadRequest(ModelState);
-        var commentModel = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate(id));
+            var commentModel = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate());
 
-        if(commentModel == null) {
+            if(commentModel == null) {
             return NotFound("Comment not found");
+            }
+            return Ok(commentModel.ToCommentDto());
         }
-        return Ok(commentModel.ToCommentDto());
-       }
 
         [HttpDelete]
         [Route("{id:int}")]
